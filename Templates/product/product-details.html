@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock title %}
+{% block content %} 
+
+   <section class="product-page">
+        <div class="container">
+            {% comment %} <div class="product-control">
+                <a href="#">Previous</a>
+                <a href="#">Next</a>
+            </div> {% endcomment %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-slider owl-carousel">
+                        <div class="product-img">
+                            <figure>
+                                <img style="height:600px" src="{{product.thumbnail}}" alt="">
+                                <div class="p-status">new</div>
+                            </figure>
+                       </div> 
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product-content">
+                        <h2>{{product.tittle}}</h2>
+                        <div class="pc-meta">
+                            <h5>${{product.price}}</h5>
+                            <div class="rating">
+                                {% if product.in_stock%}
+                              <div class="p-status">
+                                   <p>IN STOCK</p>
+                              </div>
+                              {% else  %}
+                               <div class="p-status">
+                                   <p style="font-weight:bold">OUT OF STOCK</p>
+                              </div>
+                              {% endif %}
+                            </div>
+                        </div>
+                        <p>{{product.description}}</p>
+                        <ul class="tags">
+                            <li><span>Category :</span>{{product.Catagory}}</li>
+                        
+                        </ul>
+                        {% if product.in_stock %}
+                        <form action="{%url 'add-to-cart' product.id %}"  method="POST">
+                            {% csrf_token %}
+                            <button style="cursor:pointer" class="primary-btn pc-btn">Add to cart</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Page Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <h2>Related Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for related_product in related_products %}
+                <div class="col-lg-3 col-sm-6">
+                    <div class="single-product-item">
+                        <figure>
+                            <a href="{% url 'product-details' related_product.slug %}" ><img style="height:300px"  src="{{related_product.thumbnail}}" alt=""></a>
+                            
+                        </figure>
+                        <div class="product-text">
+                        <a href="{% url 'product-details' related_product.slug %}" >
+                             <h6>{{related_product.tittle|truncatewords:8}}</h6>
+                        </a>       
+                    
+                            <p>${{related_product.price}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Related Product Section End -->
+
+{% endblock content %}

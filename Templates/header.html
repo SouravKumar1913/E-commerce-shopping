@@ -1,0 +1,88 @@
+{% load static %}
+{% comment %} 
+<div class="header-info">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="header-item">
+          <img src="{% static 'img/icons/delivery.png' %}" alt="" />
+
+          <p>Free shipping on orders over $30 in USA</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-left text-lg-center">
+        <div class="header-item">
+          <img src="{% static 'img/icons/voucher.png' %}" alt="" />
+
+          <p>20% Student Discount</p>
+        </div>
+      </div>
+      <div class="col-md-4 text-left text-xl-right">
+        <div class="header-item">
+          <img src="{% static 'img/icons/sales.png' %}" alt="" />
+
+          <p>30% off on dresses. Use code: 30OFF</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> {% endcomment %}
+
+<header class="header-section">
+  <div class="container-fluid">
+    <div class="inner-header">
+      <div class="logo">
+        <a href="{% url 'home' %}"
+          ><img src="{% static 'img/logo.png' %}" alt=""
+        /></a>
+      </div>
+      <div class="header-right">
+        <img
+          src="{% static 'img/icons/search.png' %}"
+          alt=""
+          class="search-trigger"
+        />
+        
+
+        <a href="{% url 'cart' %}">
+          <img src="{% static 'img/icons/bag.png' %}" alt="" />
+
+          <span>{{cart|length}}</span>
+        </a>
+      </div>
+      {% if not request.user.is_authenticated%}
+      <div class="user-access">
+        <a href="{% url 'registration' %}">Register</a>
+        <a href="{% url 'login' %}" class="in">Login In</a>
+      </div>
+      {% endif %}
+      <nav class="main-menu mobile-menu">
+        <ul>
+          <li><a class="" href="{% url 'home' %}">Home</a></li>
+           <li><a class="" href="{% url 'product-list' %}">Products</a></li>
+          <li>
+            <a href="#">Category</a>
+            <ul class="sub-menu">
+            {% for Category in categories %}
+              <li><a href="{% url 'category-details' Category.slug %}">{{Category.tittle|title}}</a></li>
+            {% endfor %}
+            </ul>
+          </li>
+          {% if  request.user.is_authenticated%}
+           <li>
+            Welcome,
+            <a href="#"><img src="{% static 'img/icons/man.png' %}" alt="" /></a>
+            <ul class="sub-menu">
+         
+              <li><a href="{% url 'logout'  %}">logout</a></li>
+              <li><a href="{% url 'orders'  %}">Orders</a></li>
+              <li><a href="{% url 'change_password' %}">Change password</a></li>
+            
+            </ul>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,111 @@
+{% extends 'base.html/' %}
+{% load static %}
+
+
+{% block title %} Orders {% endblock title %}
+
+{% block content %}
+
+  <!-- Page Add Section Begin -->
+  
+  <section class="categories-page spad">
+        <div class="container">
+            <div class="categories-controls">
+                <div class="row">
+                    <div class="col-lg-12">
+                       <div class="page-breadcumb ">
+                              <h3> ORDERS({{orders|length}})</h3>
+                       </div>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+   
+  <section>
+    <div class="container my-5"> 
+      <div class="row">
+         <div class="col-md-12">
+          {% if orders %}
+          <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Products</th>
+              
+              <th scope="col">Total</th>
+              <th scope="col">Status</th>
+              <th scope="col">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <td>
+              {% for order_item in order.order_items.all %}
+              {% with product=order_item.product %}
+              <img style="width: 100px; height:120px" src="{{product.thumbnail}}" >
+             
+              </td>
+              
+              <td>${{order.total}}</td>
+               <td>{{order.status}}</td>
+               <td>
+                <i type="button"  data-toggle="modal" data-target="#exampleModal_{{order.id}}" style="cursor:pointer" class = "fa fa-eye"></i>
+               </td>
+            </tr>
+
+            <!-- Button trigger modal -->
+<!-- Modal -->
+        <div class="modal fade" id="exampleModal_{{order.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           <div class="modal-dialog model-Xl" style="">
+            <div class="modal-content ">
+               <div class="modal-header">
+                      <h3 class="modal-title fs-5" id="exampleModalLabel_{{order.id}}">Total:${{order.total}}</h3>
+                      <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+             </div>
+            <div class="modal-body py-4">
+            <div class="row my-2" >
+              <div class="col-md-4 px-4">
+                  <img style="" src="{{product.thumbnail}}">
+              </div>
+               <div class="col-md-8 px-4">
+                  <h4 class="mb-2">{{product.tittle}}</h4>
+                  <p><strong>Price:</strong>{{order_item.price}}</p>
+                   <p><strong>Quantity:</strong>{{order_item.quantity}}</p>
+              </div>
+            <hr>
+           
+            </div>
+          {% endwith %}
+          {% endfor %}
+          </div>
+           <div class="modal-footer">
+           
+           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+      </div>
+        </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+    <div class="cart-page">
+        <div class="container" style="text-align:center">
+          <h4>No Orders Here</h4>
+            {% include 'no_cart.html' %}
+                 <div class="site-btn update-btn ">
+                  <a class="text-decoration-none text-dark btn" href="{% url 'product-list' %}">UPDATE Orders</a>
+               </div>
+        </div>
+    </div>
+      {% endif %}
+         </div>
+      </div>
+      
+    </div>
+  </section> 
+    <!-- Categories Page Section End -->
+
+{% endblock content %}

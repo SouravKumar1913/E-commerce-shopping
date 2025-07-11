@@ -1,0 +1,44 @@
+from django.db import models
+
+# Create your models here.
+class Catagory(models.Model):
+    tittle = models.CharField( max_length=250 , unique=True)
+    slug = models.SlugField(unique=True,max_length=200)
+    featured = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['tittle']
+
+    def __str__(self):
+        return self.tittle
+    
+class Product(models.Model):
+    Catagory = models.ForeignKey(Catagory, related_name='products',on_delete=models.CASCADE)
+    tittle = models.CharField( max_length=250 , unique=True)
+    slug = models.SlugField(unique=True,max_length=250)
+    featured = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    thumbnail = models.URLField()
+    description = models.CharField(blank=True, null=True , default='N/A')
+    in_stock = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True)   
+    updated_date = models.DateTimeField(auto_now=True)
+  
+    class Meta:
+     ordering = ['-id']
+   
+    def __str__(self):
+        return self.tittle  
+    @property
+    def related(self):
+        return self.Catagory.products.all().exclude(pk=self.pk)
+    
+class Slider(models.Model):
+    tittle = models.CharField(max_length=50)
+    banner = models.ImageField(upload_to='banners')
+    show = models.BooleanField(default=True)
+    created_date = models.DateTimeField(  auto_now_add=True)
+
+    def __str__(self):
+        return self.tittle   
