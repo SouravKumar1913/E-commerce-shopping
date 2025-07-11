@@ -131,14 +131,3 @@ AUTHENTICATION_BACKENDS =[
 ]
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = "smtp.gmail.com"  # ✅ Correct SMTP server
-EMAIL_HOST_USER = "souravbtl19@gmail.com"  # Your Gmail
-EMAIL_HOST_PASSWORD = "ixhe pcko axzo grjy"  # Not your Gmail password!
-EMAIL_PORT = 587
-
-
-# paypal method
-PAYPAL_CLIENT_ID = 'Ac2txx72VgZhHj4W5xjUiq9ebnPyRwYg-GQum0jtwqnDY3cQrCkCqDEhxt9CZ3Vc8WB4w6R-xM3TyHeh'
-PAYPAL_SECRET_ID = 'EHXzSZR490kJR42ph1RUud0369gMDqlvqdqQggLcEVmMNehglSGFCiuIiJ-GbRhWK1tTpxOrW8y8sFFF'
